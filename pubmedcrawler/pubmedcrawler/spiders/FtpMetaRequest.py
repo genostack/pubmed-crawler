@@ -2,6 +2,8 @@ import json
 import scrapy
 import os
 from dateutil import parser
+from pubmedcrawler.items import PubmedcrawlerItem
+import logging
 class FtpMetaRequest(scrapy.http.Request):
     # add user with password to ftp meta request
     user_meta = {'ftp_user': 'anonymous', 'ftp_password': ''}
@@ -28,12 +30,12 @@ class MedisumSpider(scrapy.Spider):
         files = json.loads(response.body)
         # get data from each file
         for f in files:
-            path = os.path.join(response.url, f['filename'])
-            request = FileFtpRequest(path, callback=self.parse_item)
-            yield request
+            if f['filename'].endswith('.gz'):
+               path = os.path.join(response.url, f['filename'])
+               request = FileFtpRequest(path, callback=self.parse_item)
+               yield request
     def parse_item(self, response):
          # do some actions
          item = PubmedcrawlerItem()
          item['article'] = response.body
-
-         pass
+         return item

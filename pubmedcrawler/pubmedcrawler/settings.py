@@ -64,10 +64,11 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'pubmedcrawler.pipelines.PubmedcrawlerPipeline': 300,
-#}
-
+ITEM_PIPELINES = {
+    'pubmedcrawler.pipelines.PubmedcrawlerPipeline': 3,
+#'scrapy.pipelines.files.FilesPipeline': 1
+}
+#FILES_STORE = '~/Downloads/pubmed/'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
